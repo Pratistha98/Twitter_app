@@ -9,19 +9,18 @@
 import UIKit
 
 class HomeTableViewController: UITableViewController {
-
     var tweetArray = [NSDictionary]()
     var nooftweets: Int!
-    
+    let myRefreshControl = UIRefreshControl()
     override func viewDidLoad() {
         super.viewDidLoad()
         loadTweet()
+        myRefreshControl.addTarget(self, action: #selector(loadTweet), for: .valueChanged)
+        tableView.refreshControl = myRefreshControl
     }
 
 
     // MARK: - Table view data source
-
-
 
     @IBAction func onLogout(_ sender: Any) {
         TwitterAPICaller.client?.logout()
@@ -29,9 +28,27 @@ class HomeTableViewController: UITableViewController {
         UserDefaults.standard.set(false, forKey: "userLoggedIn")
     }
 
-    func loadTweet(){
+    @objc func loadTweet(){
+        nooftweets = 20
         let myUrl = "https://api.twitter.com/1.1/statuses/home_timeline.json"
-        let myParams = ["count": 10]
+        let myParams = ["count": nooftweets]
+        TwitterAPICaller.client?.getDictionariesRequest(url: myUrl, parameters: myParams, success: {(tweets: [NSDictionary])  in
+            self.tweetArray.removeAll()
+            for tweet in tweets{
+            self.tweetArray.append(tweet)
+            }
+            self.tableView.reloadData()
+            self.myRefreshControl.endRefreshing()
+        }, failure: { (Error) in
+            print("Count not retrive tweets")
+        })
+       
+    }
+
+    func loadMoreTweets(){
+      let myUrl = "https://api.twitter.com/1.1/statuses/home_timeline.json"
+        nooftweets = nooftweets + 20
+        let myParams = ["count": nooftweets]
         TwitterAPICaller.client?.getDictionariesRequest(url: myUrl, parameters: myParams, success: {(tweets: [NSDictionary])  in
             self.tweetArray.removeAll()
             for tweet in tweets{
@@ -41,9 +58,13 @@ class HomeTableViewController: UITableViewController {
         }, failure: { (Error) in
             print("Count not retrive tweets")
         })
-       
     }
-
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath){
+        if indexPath.row + 1 == tweetArray.count{
+            loadMoreTweets()
+        }
+    }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell  {
         let cell = tableView.dequeueReusableCell(withIdentifier: "tweetCell", for: indexPath) as! TweetCellTableViewCell
         let user = tweetArray[indexPath.row]["user"] as! NSDictionary
