@@ -152,15 +152,39 @@
                     <view key="view" contentMode="scaleToFill" id="nHB-ot-saB">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="hmv-af-xlv">
+                                <rect key="frame" x="0.0" y="56" width="375" height="128"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="128" id="Rt8-T7-E8g"/>
+                                </constraints>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="hmv-af-xlv" firstAttribute="top" secondItem="9od-Fw-Wa4" secondAttribute="top" id="7Fm-TR-Rwq"/>
+                            <constraint firstItem="9od-Fw-Wa4" firstAttribute="trailing" secondItem="hmv-af-xlv" secondAttribute="trailing" id="Eay-pf-cWq"/>
+                            <constraint firstItem="hmv-af-xlv" firstAttribute="leading" secondItem="9od-Fw-Wa4" secondAttribute="leading" id="l5r-WF-uuw"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="9od-Fw-Wa4"/>
                     </view>
                     <navigationItem key="navigationItem" leftItemsSupplementBackButton="YES" id="xbo-o7-1Lu">
                         <barButtonItem key="leftBarButtonItem" title="Cancel" id="y50-iZ-ufU">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="cancel:" destination="kzb-dH-NYh" id="j1K-gv-83g"/>
+                            </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Tweet" id="6pf-5S-woJ">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="tweet:" destination="kzb-dH-NYh" id="owJ-Ju-N8q"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                 </viewController>
