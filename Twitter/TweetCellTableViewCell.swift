@@ -23,12 +23,29 @@ class TweetCellTableViewCell: UITableViewCell {
     }
 
     @IBAction func favoriteTweet(_ sender: Any) {
+        let tobeFavorited = !favorited
+        if (tobeFavorited){
+            TwitterAPICaller.client?.favoriteTweet(tweetId: tweetId, success: {
+                self.setFavorite(true)
+            }, failure: { (error) in
+                print("Favorite did not suceed: \(error)" )
+            })
+        }
+        else{
+            TwitterAPICaller.client?.unfavoriteTweet(tweetId: tweetId, success: {
+                self.setFavorite(false)
+            }, failure: { (error) in
+                print("UnFavorite did not suceed: \(error)" )
+            })
+        }
+        
     }
     
     @IBAction func retweet(_ sender: Any) {
     }
     
     var favorited: Bool = false
+    var tweetId: Int = -1
     
     func setFavorite(_ isFavorited: Bool){
         favorited = isFavorited
